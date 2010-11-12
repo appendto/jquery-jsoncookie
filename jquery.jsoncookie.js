@@ -11,6 +11,10 @@
  */
 (function( $ ) {
 
+function now() {
+	return (new Date()).getTime();
+}
+
 $.cookie = function( key, value, options ) {
 	options = $.extend( {}, options );
 	var expires = options.expires;
@@ -23,9 +27,9 @@ $.cookie = function( key, value, options ) {
 			expires = -1;
 		}
 		if ( typeof expires === "number" ) {
-			expires = new Date( +(new Date) + ( expires * 864e5 ) );
+			expires = new Date( now() + ( expires * 864e5 ) );
 		}
-		
+
 		document.cookie = [
 			key, "=", JSON.stringify( value ),
 			expires ? "; expires=" + expires.toUTCString() : "",
@@ -35,5 +39,11 @@ $.cookie = function( key, value, options ) {
 		].join( "" );
 	}
 };
+
+// support test
+var test = "jsoncookie" + now();
+$.cookie( test, test );
+$.support.cookie = $.cookie( test ) === test;
+$.cookie( test, null );
 
 })( jQuery );
