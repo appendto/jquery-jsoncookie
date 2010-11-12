@@ -11,17 +11,33 @@
  */
 (function( $ ) {
 
+var encode = encodeURIComponent,
+	decode = decodeURIComponent;
+
 function now() {
 	return (new Date()).getTime();
 }
 
 $.cookie = function( key, value, options ) {
 	options = $.extend( {}, options );
-	var expires = options.expires;
+	var expires = options.expires,
+		result;
 
+	// get all cookies
+	if ( !key ) {
+		result = {};
+		$.each( document.cookie.split( "; " ), function( i, cookie ) {
+			var parts = cookie.split( "=" );
+			result[ decode( parts[ 0 ] ) ] = JSON.parse( decode( parts[ 1 ] ) );
+		});
+		return result;
+	}
+
+	// get/set a specific cookie
+	key = encode( key );
 	if ( arguments.length === 1 ) {
-		var result = new RegExp( "(?:^|; )" + key + "=([^;]*)").exec( document.cookie );
-		return result && JSON.parse( result[ 1 ] );
+		result = new RegExp( "(?:^|; )" + key + "=([^;]*)" ).exec( document.cookie );
+		return result && JSON.parse( decode( result[ 1 ] ) );
 	} else {
 		if ( value === null ) {
 			expires = -1;
@@ -31,7 +47,7 @@ $.cookie = function( key, value, options ) {
 		}
 
 		document.cookie = [
-			key, "=", JSON.stringify( value ),
+			key, "=", encode( JSON.stringify( value ) ),
 			expires ? "; expires=" + expires.toUTCString() : "",
 			options.path ? "; path=" + options.path : "",
 			options.domain ? "; domain=" + options.domain : "",
@@ -41,9 +57,11 @@ $.cookie = function( key, value, options ) {
 };
 
 // support test
-var test = "jsoncookie" + now();
-$.cookie( test, test );
-$.support.cookie = $.cookie( test ) === test;
-$.cookie( test, null );
+(function() {
+	var test = "jsoncookie" + now();
+	$.cookie( test, test );
+	$.support.cookie = $.cookie( test ) === test;
+	$.cookie( test, null );
+})();
 
 })( jQuery );
