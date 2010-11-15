@@ -35,7 +35,7 @@ $.cookie = function( key, value, options ) {
 
 	// get/set a specific cookie
 	key = encode( key );
-	if ( arguments.length === 1 ) {
+	if ( value === undefined ) {
 		result = new RegExp( "(?:^|; )" + key + "=([^;]*)" ).exec( document.cookie );
 		return result && JSON.parse( decode( result[ 1 ] ) );
 	} else {
