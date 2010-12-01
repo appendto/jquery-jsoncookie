@@ -21,12 +21,15 @@ function now() {
 $.cookie = function( key, value, options ) {
 	options = $.extend( {}, options );
 	var expires = options.expires,
-		result;
+		result = value;
 
 	// get all cookies
 	if ( !key ) {
 		result = {};
 		$.each( document.cookie.split( "; " ), function( i, cookie ) {
+			if ( !cookie ) {
+				return;
+			}
 			var parts = cookie.split( "=" );
 			result[ decode( parts[ 0 ] ) ] = JSON.parse( decode( parts[ 1 ] ) );
 		});
@@ -54,6 +57,8 @@ $.cookie = function( key, value, options ) {
 			options.secure ? "; secure" : ""
 		].join( "" );
 	}
+
+	return result;
 };
 
 // support test
