@@ -46,7 +46,7 @@ $.cookie = function( key, value, options ) {
 			expires = -1;
 		}
 		if ( typeof expires === "number" ) {
-			expires = new Date( now() + ( expires * 864e5 ) );
+			expires = new Date( now() + expires );
 		}
 
 		document.cookie = [
