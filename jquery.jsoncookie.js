@@ -5,7 +5,7 @@
  * Released: @DATE
  * Source: http://github.com/appendto/jquery-jsoncookie
  * 
- * Copyright 2010 appendTo LLC. (http://appendto.com/team)
+ * Copyright 2011 appendTo LLC. (http://appendto.com/team)
  * Dual licensed under the MIT or GPL licenses.
  * http://appendto.com/open-source-licenses
  */
@@ -67,6 +67,6 @@ $.cookie = function( key, value, options ) {
 	$.cookie( test, test );
 	$.support.cookie = $.cookie( test ) === test;
 	$.cookie( test, null );
-})();
+}() );
 
-})( jQuery );
+}( jQuery ) );
