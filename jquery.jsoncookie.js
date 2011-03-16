@@ -1,13 +1,11 @@
 /*!
  * jQuery JSON Cookie
  * 
- * Version: @VERSION
- * Released: @DATE
- * Source: http://github.com/appendto/jquery-jsoncookie
- * 
  * Copyright 2011 appendTo LLC. (http://appendto.com/team)
  * Dual licensed under the MIT or GPL licenses.
  * http://appendto.com/open-source-licenses
+ * 
+ * http://github.com/appendto/jquery-jsoncookie
  */
 (function( $ ) {
 
