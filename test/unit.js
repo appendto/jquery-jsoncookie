@@ -32,6 +32,13 @@ test( "number", function() {
 	strictEqual( $.cookie( "test" ), 5, "retrieved" );
 });
 
+test( "boolean", function() {
+	expect( 2 );
+	$.cookie( "test", true );
+	equal( document.cookie, "test=true", "stored" )
+	strictEqual( $.cookie( "test" ), true, "retrieved" );
+});
+
 test( "array", function() {
 	expect( 2 );
 	$.cookie( "test", [ "a", 2 ] );
