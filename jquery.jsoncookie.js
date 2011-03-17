@@ -60,11 +60,13 @@ $.cookie = function( key, value, options ) {
 };
 
 // support test
-(function() {
-	var test = "jsoncookie" + now();
-	$.cookie( test, test );
-	$.support.cookie = $.cookie( test ) === test;
-	$.cookie( test, null );
-}() );
+if ( $.support ) {
+	(function() {
+		var test = "jsoncookie" + now();
+		$.cookie( test, test );
+		$.support.cookie = $.cookie( test ) === test;
+		$.cookie( test, null );
+	}() );
+}
 
 }( jQuery ) );
