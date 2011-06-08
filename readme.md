@@ -40,3 +40,5 @@ Gets a hash of all stored values.
 This plugin requires the [JSON object](https://developer.mozilla.org/En/Using_native_JSON) to exist. For support in older browsers, you'll need to include [json2.js](https://github.com/douglascrockford/JSON-js).
 
 For more information on cookies, see the [MDN documentation](https://developer.mozilla.org/en/document.cookie).
+
+Chrome doesn't support cookies for local files unless you start it with the --enable-file-cookies flag.
