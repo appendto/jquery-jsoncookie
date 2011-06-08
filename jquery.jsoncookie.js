@@ -16,6 +16,14 @@ function now() {
 	return (new Date()).getTime();
 }
 
+function error(message){
+	if ( $.error ) {
+		$.error(message);
+	} else {
+		throw message;
+	}
+}
+
 $.cookie = function( key, value, options ) {
 	options = $.extend( {}, options );
 	var expires = options.expires,
@@ -36,19 +44,28 @@ $.cookie = function( key, value, options ) {
 
 	// get/set a specific cookie
 	key = encode( key );
+	
 	if ( value === undefined ) {
 		result = new RegExp( "(?:^|; )" + key + "=([^;]*)" ).exec( document.cookie );
 		return result && JSON.parse( decode( result[ 1 ] ) );
 	} else {
 		if ( value === null ) {
 			expires = -1;
+		} 
+		else {
+			value = encode( JSON.stringify( value ) );
+			
+			var size = key.length + "=".length + value.length;
+			
+			if (size > 4095) error("cookie too big");
 		}
+		
 		if ( typeof expires === "number" ) {
 			expires = new Date( now() + expires );
 		}
-
+		
 		document.cookie = [
-			key, "=", encode( JSON.stringify( value ) ),
+			key, "=", value,
 			expires ? "; expires=" + expires.toUTCString() : "",
 			options.path ? "; path=" + options.path : "",
 			options.domain ? "; domain=" + options.domain : "",

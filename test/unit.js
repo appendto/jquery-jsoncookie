@@ -70,3 +70,31 @@ test( "get all", function() {
 		baz: [ "qux" ]
 	});
 });
+
+test( "size error", function() {
+	expect( 2 );
+	
+	var testValue = "";
+	var testKey = "test";
+	
+	// Generates a 4095 byte cookie.
+	for (var i = 0; i < 4089 - testKey.length; i++) { testValue += "a"; }
+	
+	raises( function() { $.cookie( testKey, testValue ) }, "size error thrown");
+	equal( $.cookie( testKey ), null );
+});
+
+test( "large cookie", function() {
+	expect( 2 );
+	
+	var testValue = "";
+	var testKey = "test";
+	
+	// Generates a 4094 byte cookie.
+	for (var i = 0; i < 4088 - testKey.length; i++) { testValue += "a"; }
+	
+	$.cookie( testKey, testValue );
+	
+	equal( document.cookie, "test=%22" + testValue + "%22", "stored" );
+	strictEqual( $.cookie( "test" ), testValue, "retrieved" );
+});
